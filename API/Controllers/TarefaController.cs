@@ -93,5 +93,50 @@ public class TarefaController : ControllerBase
         }
     }
 
+     // GET: api/tarefa/concluidas
+    [HttpGet]
+    [Route("concluidas")]
+    public IActionResult Concluidas([FromRoute] string status)
+    {
+        try
+        {
+            Tarefa? tarefaCadastrada =
+                _context.Tarefas
+                .Include(x => x.Status)
+                .FirstOrDefault(x => x.Status == status);
+            if (tarefaCadastrada.Status == "Concluida")
+            {
+                return Ok(tarefaCadastrada);
+            }
+            return NotFound();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 
+    //GET	api/tarefa/naoconcluidas
+    [HttpGet]
+    [Route("naoconcluidas")]
+    public IActionResult NaoConcluidas([FromRoute] string status)
+    {
+        try
+        {
+            Tarefa? tarefaCadastrada =
+                _context.Tarefas
+                .Include(x => x.Status)
+                .FirstOrDefault(x => x.Status == status);
+            if (tarefaCadastrada.Status != "Concluida")
+            {
+                return Ok(tarefaCadastrada);
+            }
+            return NotFound();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }
+
