@@ -55,24 +55,17 @@ public class TarefaController : ControllerBase
 
     // PATCH: api/tarefa/alterar
     [HttpPut]
-    [Route("alterar/{id}")]
-    public IActionResult Alterar([FromRoute] int id,
+    [Route("alterar/{status}")]
+    public IActionResult Alterar([FromRoute] string status,
     [FromBody] Tarefa tarefa)
     {
         try
         {
             Tarefa? tarefaCadastrada =
-                _context.Tarefas.FirstOrDefault(x => x.TarefaId == id);
+                _context.Tarefas.FirstOrDefault(x => x.Status == );
 
             if (tarefaCadastrada != null)
             {
-
-                Categoria? categoria =
-                    _context.Categorias.Find(tarefa.CategoriaId);
-                if (categoria == null)
-                {
-                    return NotFound();
-                }
                 if(tarefaCadastrada.Status == "Não iniciada")
                 {
                     tarefaCadastrada.Status = "Em andamento";
@@ -92,6 +85,7 @@ public class TarefaController : ControllerBase
             throw;
         }
     }
+    
 
      // GET: api/tarefa/concluidas
     [HttpGet]

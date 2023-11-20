@@ -1,7 +1,10 @@
-﻿namespace API.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.Models;
 
 public class Tarefa
 {
+    [Key]
     public int TarefaId { get; set; }
     public string? Titulo { get; set; }
     public string? Descricao { get; set; }

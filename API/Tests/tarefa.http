@@ -11,6 +11,6 @@ Content-Type: application/json
   "Titulo": "Compras no Supermercado",
   "Descricao": "1. Fazer lista de compras: pão, leite, ovos, frutas, vegetais",
   "CategoriaId": 4,
-  "Status": ""
+  "Status": "Não iniciada"
 }
 
