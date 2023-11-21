@@ -62,7 +62,7 @@ public class TarefaController : ControllerBase
         try
         {
             Tarefa? tarefaCadastrada =
-                _context.Tarefas.FirstOrDefault(x => x.Status == );
+                _context.Tarefas.FirstOrDefault(x => x.Status == status);
 
             if (tarefaCadastrada != null)
             {
@@ -90,17 +90,14 @@ public class TarefaController : ControllerBase
      // GET: api/tarefa/concluidas
     [HttpGet]
     [Route("concluidas")]
-    public IActionResult Concluidas([FromRoute] string status)
+    public IActionResult ListarConcluidas([FromBody] Tarefa tarefa)
     {
         try
         {
-            Tarefa? tarefaCadastrada =
-                _context.Tarefas
-                .Include(x => x.Status)
-                .FirstOrDefault(x => x.Status == status);
-            if (tarefaCadastrada.Status == "Concluida")
+            List<Tarefa> tarefas = _context.Tarefas.Include(x => x.Categoria).ToList();
+            if (tarefa.Status == "Concluida")
             {
-                return Ok(tarefaCadastrada);
+                return Ok(tarefas);
             }
             return NotFound();
         }
@@ -111,19 +108,16 @@ public class TarefaController : ControllerBase
     }
 
     //GET	api/tarefa/naoconcluidas
-    [HttpGet]
-    [Route("naoconcluidas")]
-    public IActionResult NaoConcluidas([FromRoute] string status)
+ [HttpGet]
+    [Route("concluidas")]
+    public IActionResult NaoConcluidas([FromBody] Tarefa tarefa)
     {
         try
         {
-            Tarefa? tarefaCadastrada =
-                _context.Tarefas
-                .Include(x => x.Status)
-                .FirstOrDefault(x => x.Status == status);
-            if (tarefaCadastrada.Status != "Concluida")
+            List<Tarefa> tarefas = _context.Tarefas.Include(x => x.Categoria).ToList();
+            if (tarefa.Status != "Concluida")
             {
-                return Ok(tarefaCadastrada);
+                return Ok(tarefas);
             }
             return NotFound();
         }
@@ -133,4 +127,3 @@ public class TarefaController : ControllerBase
         }
     }
 }
-
