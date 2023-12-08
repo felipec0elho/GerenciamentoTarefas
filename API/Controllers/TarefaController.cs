@@ -88,18 +88,15 @@ public class TarefaController : ControllerBase
     
 
      // GET: api/tarefa/concluidas
-    [HttpGet]
+[HttpGet]
     [Route("concluidas")]
-    public IActionResult ListarConcluidas([FromBody] Tarefa tarefa)
+    public IActionResult Concluidas([FromBody] Tarefa tarefa)
     {
         try
         {
-            List<Tarefa> tarefas = _context.Tarefas.Include(x => x.Categoria).ToList();
-            if (tarefa.Status == "Concluida")
-            {
-                return Ok(tarefas);
-            }
-            return NotFound();
+            List<Tarefa> tarefas = _context.Tarefas.Include(x => x.Categoria).Where(x => x.Status == "Concluida").ToList();
+           
+            return Ok(tarefas);
         }
         catch (Exception e)
         {
@@ -109,17 +106,14 @@ public class TarefaController : ControllerBase
 
     //GET	api/tarefa/naoconcluidas
  [HttpGet]
-    [Route("concluidas")]
+    [Route("naoconcluidas")]
     public IActionResult NaoConcluidas([FromBody] Tarefa tarefa)
     {
         try
         {
-            List<Tarefa> tarefas = _context.Tarefas.Include(x => x.Categoria).ToList();
-            if (tarefa.Status != "Concluida")
-            {
-                return Ok(tarefas);
-            }
-            return NotFound();
+            List<Tarefa> tarefas = _context.Tarefas.Include(x => x.Categoria).Where(x => x.Status != "Concluida").ToList();
+           
+            return Ok(tarefas);
         }
         catch (Exception e)
         {
